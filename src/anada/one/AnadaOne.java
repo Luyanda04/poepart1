@@ -52,7 +52,6 @@ public class AnadaOne {
 
 password, firstName, lastName));
     }
-
 public boolean checkUserName(String username) {
         boolean underscore = false;
         for (int i = 0; i < username.length(); i++) {
@@ -67,26 +66,4 @@ public boolean checkUserName(String username) {
         }
         return true;
     }
-public boolean checkPasswordComplexity(String password) {
-        boolean complexity = false;
-        boolean complexity2 = false;
-        boolean complexity3 = false;
-        for (int i = 0; i < password.length(); i++) {
-            if (password.charAt(i) >= 65 && password.charAt(i) <= 90) {
-                complexity = true;
-            }
-            if (password.charAt(i) >= 48 && password.charAt(i) <= 57) {
-                complexity2 = true;
-            }
 
-            if ((password.charAt(i) >= 32 && password.charAt(i) <= 47) || (password.charAt(i) >= 58 && password.charAt(i) <= 64) || (password.charAt(i) >= 91 && password.charAt(i) <= 96) || (password.charAt(i) >= 123 && password.charAt(i) <= 127)) {
-                complexity3 = true;
-            }
-        }
-        if (complexity == true && complexity2 == true && complexity3 == true && password.length() >= 8) {
-            System.out.println("Password complexity successfully captured. Please proceed to login");
-        } else {
-            System.out.println("Password is not correctly formatted, please ensure that the password contains at least 8 characters, a capital letter, a number, and a special character");
-        }
-        return true;
-    }  

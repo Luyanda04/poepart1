@@ -53,6 +53,20 @@ public class AnadaOne {
 password, firstName, lastName));
     }
 
-    
+public boolean checkUserName(String username) {
+        boolean underscore = false;
+        for (int i = 0; i < username.length(); i++) {
+            if (username.charAt(i) == '_') {
+                underscore = true;
+            }
+        }
+        if (underscore == true && username.length() <= 5) {
+            System.out.println("Username successfully captured");
+        } else {
+            System.out.println("Username is not correctly formatted, please ensure that your username contains an underscore and is no more than 5 characters in length");
+        }
+        return true;
+    }
+   
     
 

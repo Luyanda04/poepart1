@@ -90,32 +90,3 @@ public boolean checkPasswordComplexity(String password) {
         }
         return true;
     }  
-public String registerUser(String password, String username) {
-        if (!checkUserName(username)) {
-            System.out.println("Username is not correctly formatted, please ensure that username contains an underscore and is no more than 5 characters in length");
-        } else if (!checkPasswordComplexity(password)) {
-            System.out.println("Password is not correctly formatted, please ensure that the password contains at least 8 characters, a capital letter, a number, and a special character");
-        } else {
-
-            System.out.println("Password and username successfully captured");
-        }
-        return "Registration successful";
-    }
-
-     public boolean loginUser(String loginUserName, String userName, String loginPassword, String password) {
-        if (loginUserName.equals(userName) && loginPassword.equals(password)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-     public String returnLoginStatus(String loginUserName, String userName, String loginPassword, String password, String firstName, String lastName) {
-
-        if (loginUser(loginUserName, userName, loginPassword, password) == true) {
-            return "Welcome " + firstName + " " + lastName + ". It's great to see you again";
-        } else {
-            return "Username or password incorrect, please try again";
-        }
-   }
-
-    }

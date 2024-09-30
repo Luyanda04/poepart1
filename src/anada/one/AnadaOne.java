@@ -21,7 +21,7 @@ public class AnadaOne {
         String loginPassword;
         String password;
 
-        System.out.println("Enter your first name");
+        System.out.println(" first name");
         firstName = input.nextLine();
 
         System.out.println("Enter your last name");

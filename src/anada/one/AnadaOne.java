@@ -101,3 +101,11 @@ public String registerUser(String password, String username) {
         }
         return "Registration successful";
     }
+
+     public boolean loginUser(String loginUserName, String userName, String loginPassword, String password) {
+        if (loginUserName.equals(userName) && loginPassword.equals(password)) {
+            return true;
+        } else {
+            return false;
+        }
+    }

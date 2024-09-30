@@ -108,4 +108,13 @@ public String registerUser(String password, String username) {
             return false;
         }
     }
+ public String returnLoginStatus(String loginUserName, String userName, String loginPassword, String password, String firstName, String lastName) {
 
+        if (loginUser(loginUserName, userName, loginPassword, password) == true) {
+            return "Welcome " + firstName + " " + lastName + ". It's great to see you again";
+        } else {
+            return "Username or password incorrect, please try again";
+        }
+   }
+
+    }

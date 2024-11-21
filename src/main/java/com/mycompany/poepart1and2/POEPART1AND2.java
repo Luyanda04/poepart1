@@ -7,147 +7,156 @@ package com.mycompany.poepart1and2;
 import java.util.Scanner;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
 
 /**
  *
  * @author RC_Student_lab
  */
-public class POEPART1AND2 {
+public class POEPART1AND2 
+{public static void main(String[] args) {
+    final JDialog dialog = new JDialog();
+    dialog.setAlwaysOnTop(true);
 
-    public static void main(String[] args) {
-        final JDialog dialog = new JDialog();
-       dialog.setAlwaysOnTop(true);
-       // TODO code application logic here
-        //pass the external class
-        Login log= new Login();
-         
-       
-        
-        //decalarations
-        String firstname;
-        String lastname;
-        String username;
-        String password;
-        
-        //create an object of the scanner;
-        Scanner input=new Scanner(System.in);
-        
-        //prompt the user to enter the firstname,lastname,username,password
-        System.out.println("Enter firstname:  ");
-        firstname=input.next();
-        log.setfirstname(firstname);
-        
-        System.out.println("Enter lastname:   ");
-        lastname=input.next();
-        log.setlastname(lastname);
-        
-        System.out.println("Enter username:   ");
-        username=input.next();
-        log.setusername(username);
-        
-        System.out.println("Enter password");
-        password=input.next();
-        log.setpassword(password);
-        
-        //register the user
-        String registration=log.registeruser(firstname,lastname,username,password);
-        System.out.println("registration: "+ registration);
-        
-        //login user
-        if(registration.equals("the two above conditions have been met and user has been registered successfully")){
+    // Pass the external class
+    Login log = new Login();
+    classtask taskManager = null;
+
+    // Declarations
+    String firstname;
+    String lastname;
+    String username;
+    String password;
+
+    // Create a scanner object
+    Scanner input = new Scanner(System.in);
+
+    // Prompt user for registration
+    System.out.println("Enter firstname:  ");
+    firstname = input.next();
+    log.setfirstname(firstname);
+
+    System.out.println("Enter lastname:   ");
+    lastname = input.next();
+    log.setlastname(lastname);
+
+    System.out.println("Enter username:   ");
+    username = input.next();
+    log.setusername(username);
+
+    System.out.println("Enter password");
+    password = input.next();
+    log.setpassword(password);
+
+    // Register user
+    String registration = log.registeruser(firstname, lastname, username, password);
+    System.out.println("Registration: " + registration);
+
+    // Login user
+    if (registration.equals("the two above conditions have been met and user has been registered successfully")) {
         System.out.println("Enter username to login: ");
-        username=input.next();
+        username = input.next();
         System.out.println("Enter password to login: ");
-        password=input.next();
-        
-        //display login status
-        boolean loginSuccesful=log.loginuser(firstname, lastname, username, password);
-        String loginMessage=log.returnLoginStatus(loginSuccesful);
+        password = input.next();
+
+        boolean loginSuccessful = log.loginuser(firstname, lastname, username, password);
+        String loginMessage = log.returnLoginStatus(loginSuccessful);
         System.out.println(loginMessage);
-        
-    
-    
-        // TODO code application logic here
-        // Login functionality
-       
 
-        if (username.equals("admin") && password.equals("password")) {
-            // Welcome message
-            JOptionPane.showMessageDialog(null, "Welcome to EasyKanban");
+        if (!loginSuccessful) {
+            System.exit(0);
         }
-      
-       int menuOption = 0;
-        
-      
-        JOptionPane.showMessageDialog(null, "Welcome To EasyKanBan");
-        while ( true) {
-             menuOption = Integer.parseInt(JOptionPane.showInputDialog("Select an option :\n1: Add tasks\n2: Show report\n3: Quit"));
 
-            switch ( menuOption) {
-                case 1:
-                     int total = 0;
-        
-                    int numberofTASKS = Integer.parseInt(JOptionPane.showInputDialog("How many tasks do you wish to record?"));
+        // Main menu for EasyKanban
+        JOptionPane.showMessageDialog(null, "Welcome to EasyKanban");
+        int menuOption = 0;
 
-                    classtask task = new classtask(numberofTASKS);  // Initialize the task manager with the number of tasks
+        // Initialize task manager after login
+        int numberofTASKS = Integer.parseInt(JOptionPane.showInputDialog("How many tasks do you wish to record?"));
+        taskManager = new classtask(numberofTASKS);
 
+        while (true) {
+            menuOption = Integer.parseInt(JOptionPane.showInputDialog(
+                "Select an option:\n" +
+                "1: Add tasks\n" +
+                "2: Display tasks with status 'Done'\n" +
+                "3: Display task with longest duration\n" +
+                "4: Search for a task by name\n" +
+                "5: Search for tasks assigned to a developer\n" +
+                "6: Delete a task by name\n" +
+                "7: Display report of all tasks\n" +
+                "8: Quit"));
+
+            switch (menuOption) {
+                case 1: // Add Tasks
                     for (int i = 0; i < numberofTASKS; i++) {
-                        // Task name input
-                        String taskName = JOptionPane.showInputDialog("Enter Task name: ");
-
-                        // Task description input with validation
+                        String taskName = JOptionPane.showInputDialog("Enter Task Name:");
                         String taskDescription;
                         do {
-                            taskDescription = JOptionPane.showInputDialog("Enter Task Description for (should not exceed  50 characters): " );
-                        } while (!task.checkDescription(taskDescription));  // Check length validation
+                            taskDescription = JOptionPane.showInputDialog("Enter Task Description (max 50 characters):");
+                        } while (!taskManager.checkDescription(taskDescription));
+                        String developer = JOptionPane.showInputDialog("Enter Developer Details (First and Last Name):");
+                        int duration = Integer.parseInt(JOptionPane.showInputDialog("Enter Task Duration (in hours):"));
+                        String[] statuses = {"To Do", "Doing", "Done"};
+                        int statusIndex = JOptionPane.showOptionDialog(null, "Choose Task Status:", "Task Status",
+                                JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, statuses, statuses[0]);
+                        String status = statuses[statusIndex];
 
-                        // Developer details input
-                        String developerDetail = JOptionPane.showInputDialog("Enter Developer Details (First and Last name): ");
-
-                        // Task duration input
-                        int taskDuration = Integer.parseInt(JOptionPane.showInputDialog("Enter Task Duration (in hours): " ));
-
-                        // Task status selection
-                        String[] Options = { "To Do", "Doing", "Done" };
-                        int status = JOptionPane.showOptionDialog(null,
-                                "Choose a status "  + ":",
-                                "Task Status",
-                                JOptionPane.DEFAULT_OPTION,
-                                JOptionPane.INFORMATION_MESSAGE,
-                                null,
-                                Options,
-                                Options[0]);
-                        String taskStatus = Options[status];
-
-                        // Add the task to the task manager
-                        task.addTask(taskName, taskDescription, developerDetail, taskDuration, taskStatus);
-
-                        // Display task details
-                        task.printTaskDetails(i);
+                        taskManager.addTask(taskName, taskDescription, developer, duration, status);
+                        taskManager.printTaskDetails(i);
                     }
-
-                    // Calculate total hours
-                    total= task.getTotalHours();
-                    JOptionPane.showMessageDialog(null, "The total hours of all the tasks performed: " +  total + " hrs");
                     break;
 
-                case 2:
-                   JOptionPane.showMessageDialog(null, "coming soon!!!!");
+                case 2: // Display tasks with status 'Done'
+                    taskManager.displayTasksWithStatus("Done");
                     break;
 
-                case 3:
-                    JOptionPane.showMessageDialog(null, "thank you bye");
+                case 3: // Display task with longest duration
+                    taskManager.displayLongestTask();
+                    break;
+
+                case 4: // Search for a task by name
+                    String searchName = JOptionPane.showInputDialog("Enter the Task Name to search:");
+                    taskManager.searchTaskByName(searchName);
+                    break;
+
+                case 5: // Search for tasks assigned to a developer
+                    String searchDeveloper = JOptionPane.showInputDialog("Enter the Developer Name to search tasks:");
+                    taskManager.displayTasksWithStatus(searchDeveloper);
+                    break;
+
+                case 6: // Delete a task by name
+                    String deleteName = JOptionPane.showInputDialog("Enter the Task Name to delete:");
+                    taskManager.deleteTaskByName(deleteName);
+                    break;
+
+                case 7: // Display full report of all tasks
+                    taskManager.displayReport();
+                    break;
+
+                case 8: // Quit
+                    JOptionPane.showMessageDialog(null, "Thank you! Goodbye.");
                     System.exit(0);
                     break;
 
                 default:
-                    JOptionPane.showMessageDialog(null, "Invalid option, please choose the correct the option.");
+                    JOptionPane.showMessageDialog(null, "Invalid option, please choose a valid option.");
                     break;
             }
-        
-    
-    }
-        
-    }
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Registration failed. Exiting the program.");
     }
 }
+}
+
+
+    
+    
+        
+
+       
+
+    
+
